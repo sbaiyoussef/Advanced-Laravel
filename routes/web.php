@@ -1,0 +1,51 @@
+<?php
+use App\Http\Controllers\TestController;
+// use App\Http\Controllers\Front\UserController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use PHPUnit\TextUI\XmlConfiguration\Group;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+Route::get('/get-id/{id}',function($id){
+   return $id;
+})->name('a');
+
+Route::get('/get-string/{id?}',function(){
+    return 'welcome';
+ })->name('b');
+
+//  Route::namespace('Front')->group(function(){
+//     Route::get('UserS',[UserController::class, 'showAdmin']);
+// });
+
+// Route::get('/user', [TestController::class, 'show']);
+
+Route::middleware(['auth'])->prefix('users')->group(function () {
+    // Route::get('/user', function () {
+        Route::get('show', [TestController::class, 'show']);
+        Route::get('update', [TestController::class, 'update']);
+        Route::get('delete', [TestController::class, 'delete']);
+        Route::get('add', [TestController::class, 'add']);
+
+});
+
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
+
+
+
