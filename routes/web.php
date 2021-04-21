@@ -48,4 +48,10 @@ Auth::routes(['verify'=>true]);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home')->middleware('verified');
 
 Route::get('/redirect/facebook', [App\Http\Controllers\SocialController::class, 'redirect']);
+Route::group(['prefix' => LaravelLocalization::setLocale(),'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]], function() {
+Route::group(['prefix' => 'offers'],function (){
+        Route::get('create',[App\Http\Controllers\CrudController::class,'create']);
+        Route::Post('store',[App\Http\Controllers\CrudController::class,'store'])->name('offres.store');
+    });
+});
 
