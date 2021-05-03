@@ -13,7 +13,7 @@ class StoreOffersRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,22 @@ class StoreOffersRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name_ar'=>'required|max:100|unique:offers,name_ar',
+            'name_en'=>'required|max:100|unique:offers,name_en',
+            'details_ar'=>'required',
+            'details_en'=>'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+             'name_ar.required'=>__('messages.offer name required'),
+             'name_ar.unique'=>__('messages.offer name is already used'),
+             'name_in.required'=>__('messages.offer name required'),
+             'name_in.unique'=>__('messages.offer name is already used'),
+             'details_ar.required' => __('messages.details required'),
+             'details_en.required' => __('messages.details required'),
         ];
     }
 }

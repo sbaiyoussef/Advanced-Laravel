@@ -10,6 +10,6 @@ class Offers extends Model
     use HasFactory;
 
     protected $fillable =[
-        'name','details'
+        'name_en','name_ar','details_en','details_ar'
     ];
 }
